@@ -3,7 +3,7 @@ import { login, logout, register } from "../controllers/auth.js";
 
 const router = express.Router();
 router.get('/register', (req,res) => {
-  res.json("working")
+  res.json("register working")
 })
 router.get('/login', (req,res) => {
   res.json("login working")

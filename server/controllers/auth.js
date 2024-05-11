@@ -16,10 +16,11 @@ export const register = (req, res) => {
     const hash = bcrypt.hashSync(req.body.password, salt);
 
     //inserting data into database if the user not exist
-    const insertQuery = "INSERT INTO users (`email`, `password`) VALUES (?)"
+    const insertQuery = "INSERT INTO users (`email`, `password`, `username`) VALUES (?)"
     const values = [
       req.body.email,
       hash,
+      req.body.username,
     ]
     db.query(insertQuery, [values], (err, data) => {
       if(err) return res.json(err);
@@ -49,5 +50,8 @@ export const login = (req, res) => {
 }
 
 export const logout = (req, res) => {
-
+  res.clearCookie("accessToken", {
+    sameSite: "None",
+    secure: true,
+  }).status(200).json("logged out")
 }

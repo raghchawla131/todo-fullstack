@@ -100,3 +100,14 @@ html, body {
 .auth-err {
   color: red;
 }
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.nav__right {
+  display: flex;
+  gap: 2rem;
+}
