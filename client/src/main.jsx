@@ -7,9 +7,9 @@ import { AuthContextProvider } from "./context/authContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthContextProvider>
-      <CookiesProvider defaultSetOptions={{ path: "/" }}>
-        <App />
-      </CookiesProvider>
+        <CookiesProvider defaultSetOptions={{ path: "/" }}>
+          <App />
+        </CookiesProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

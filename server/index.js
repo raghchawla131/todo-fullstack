@@ -1,5 +1,6 @@
 import express from "express";
 import authRoutes from "./routes/auth.js"
+import taskRoutes from "./routes/tasks.js"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -13,7 +14,8 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(cookieParser());
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/task", taskRoutes);
 
 app.listen(8000, () => {
   console.log("connected on port 8000");

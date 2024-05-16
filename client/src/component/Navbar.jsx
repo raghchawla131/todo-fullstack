@@ -14,7 +14,7 @@ const Navbar = () => {
         </div>
         <div className="nav__right">
           <h1>{currentUser?.username}</h1>
-          {currentUser ? <h1 onClick={logout}>logout</h1> : <h1><Link to="/login">login</Link></h1>}
+          {currentUser ? <h1 className="logout" onClick={logout}>logout</h1> : <h1><Link to="/login">login</Link></h1>}
         </div>
       </div>
     </>
