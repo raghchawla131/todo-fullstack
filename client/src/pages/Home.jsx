@@ -9,29 +9,44 @@ const Home = () => {
     task: "",
     userId: "",
   });
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     const userDataString = localStorage.getItem("user");
     const userData = JSON.parse(userDataString);
     setNewTask((prevState) => ({
       ...prevState,
-      userId: userData ? userData.id : "", 
+      userId: userData ? userData.id : "",
     }));
   }, []);
+
+  const fetchTasks = async () => {
+    try {
+      const res = await axios.post(`http://localhost:8000/api/task/get`, {
+        userId: newTask.userId,
+      });
+      setTasks(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
     setNewTask((prevState) => ({
       ...prevState,
       task: e.target.value,
-    })
-    );
+    }));
     console.log(newTask);
   };
 
   const handleAddTask = async () => {
     try {
-      const res = await axios.post("http://localhost:8000/api/task/new", newTask);
+      const res = await axios.post(
+        "http://localhost:8000/api/task/new",
+        newTask
+      );
     } catch (error) {
       console.log(error);
     }
@@ -48,11 +63,16 @@ const Home = () => {
               onChange={handleChange}
               placeholder="Enter task"
             />
-            <button onClick={handleAddTask}>Add</button>
+            <button
+              onClick={() => {
+                handleAddTask();
+                fetchTasks();
+              }}
+            >
+              Add
+            </button>
           </div>
-          <div className="task-list">
-            <Tasks userId = {newTask.userId}/>
-          </div>
+          <Tasks tasks={tasks} fetchTasks={fetchTasks} />
         </div>
       </div>
     </>

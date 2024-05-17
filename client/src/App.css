@@ -93,10 +93,9 @@ html, body {
   border: none;
 }
 
-.task-list {
-  height: 90%;
-  overflow-y: scroll;
-  padding: 0 1rem;
+.task--list {
+  border: 2px solid yellow;
+  overflow-y: auto;
 }
 
 .task {

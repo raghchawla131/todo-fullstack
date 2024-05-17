@@ -1,31 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Tasks = ({ userId }) => {
-  const [ tasks, setTasks ] = useState([]);
-
+const Tasks = ({ tasks, fetchTasks }) => {
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const res = await axios.post(`http://localhost:8000/api/task/get`, {userId});
-        setTasks(res.data)
-        console.log(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
     fetchTasks();
-  }, [userId]);
+  }, [fetchTasks]);
 
   return (
     <>
-      <div className="tasks">
-        {tasks.map(task => (
+      <div className="task--list">
+        {tasks.map((task) => (
           <div className="task" key={task.id}>
             <h1>{task.task}</h1>
             <div className="task__edit--btns">
               <button>edit</button>
-              <button>delete</button>
+              <button onClick={handleDelete}>delete</button>
             </div>
           </div>
         ))}
