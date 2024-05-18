@@ -12,7 +12,6 @@ export const addNewTask = (req, res) => {
 
 export const getTasks = (req, res) => {
   const userId = req.body.userId;
-  console.log("userId", userId);
   const q = "SELECT * FROM tasks WHERE uid = ?";
 
   db.query(q, [userId], (err, data) => {
@@ -20,7 +19,18 @@ export const getTasks = (req, res) => {
       console.error("Error fetching tasks:", err);
       return res.status(500).json({ error: "Internal server error" });
     }
-    console.log(data);
     res.status(200).json(data);
+  });
+};
+
+export const deleteTask = (req, res) => {
+  const q = "DELETE FROM tasks WHERE id = ?";
+  console.log(req.body.id);
+  db.query(q, [req.body.id], (err, data) => {
+    if (err) {
+      console.error("Error deleting task:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+    res.status(200).json("Task deleted");
   });
 };

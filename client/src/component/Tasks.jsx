@@ -1,10 +1,16 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Tasks = ({ tasks, fetchTasks }) => {
-  useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
+
+  const handleClick = async (id) => {
+    try {
+      const res = await axios.post('http://localhost:8000/api/task/delete', {id});
+      fetchTasks();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -12,10 +18,7 @@ const Tasks = ({ tasks, fetchTasks }) => {
         {tasks.map((task) => (
           <div className="task" key={task.id}>
             <h1>{task.task}</h1>
-            <div className="task__edit--btns">
-              <button>edit</button>
-              <button onClick={handleDelete}>delete</button>
-            </div>
+              <button className="delete--task" onClick={() => {handleClick(task.id)}}>Delete</button>
           </div>
         ))}
       </div>

@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useCookies } from "react-cookie";
+import React, { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import Tasks from "../component/Tasks";
 import axios from "axios";
@@ -20,13 +19,18 @@ const Home = () => {
     }));
   }, []);
 
+  useEffect(() => {
+    if (newTask.userId) {
+      fetchTasks(newTask.userId);
+    }
+  }, [newTask.userId]);
+
   const fetchTasks = async () => {
     try {
       const res = await axios.post(`http://localhost:8000/api/task/get`, {
         userId: newTask.userId,
       });
       setTasks(res.data);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +42,6 @@ const Home = () => {
       ...prevState,
       task: e.target.value,
     }));
-    console.log(newTask);
   };
 
   const handleAddTask = async () => {
